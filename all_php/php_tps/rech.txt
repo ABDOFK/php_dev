@@ -1,0 +1,61 @@
+Voici une explication détaillée de chaque variable globale en PHP :
+
+1. **`$_GET`** :  
+   Cette variable permet de récupérer les données envoyées via l'URL (méthode GET). Les paramètres sont inclus dans l'URL sous forme de chaîne de requête après un "?".
+   - **Exemple** : Si vous avez une URL comme `example.com/index.php?nom=John&age=25`, vous pouvez accéder à ces données avec `$_GET['nom']` pour obtenir "John" et `$_GET['age']` pour "25".
+   - **Utilisation courante** : Transmission de petites quantités de données, comme les filtres de recherche.
+
+2. **`$_POST`** :  
+   Cette variable est utilisée pour récupérer les données envoyées via un formulaire HTML en utilisant la méthode POST. Contrairement à GET, les données ne sont pas visibles dans l'URL.
+   - **Exemple** : Si un formulaire envoie les champs `nom` et `age` avec la méthode POST, vous pouvez accéder aux données avec `$_POST['nom']` et `$_POST['age']`.
+   - **Utilisation courante** : Envoi de données sensibles ou volumineuses, comme des mots de passe ou des fichiers.
+
+3. **`$_SESSION`** :  
+   Cette variable permet de stocker des informations sur l'utilisateur durant sa session. Une session démarre dès qu'un utilisateur visite le site et peut persister entre plusieurs pages.
+   - **Exemple** : Pour stocker le nom d'un utilisateur après sa connexion, vous pouvez utiliser `$_SESSION['nom_utilisateur'] = 'John';`. Vous pourrez récupérer cette information sur n'importe quelle page tant que la session est active.
+   - **Utilisation courante** : Gestion des connexions utilisateurs, panier d'achat dans un site e-commerce, etc.
+
+4. **`$_COOKIE`** :  
+   Les cookies sont de petites informations stockées sur le navigateur de l'utilisateur et envoyées à chaque requête HTTP. `$_COOKIE` permet de lire ces cookies.
+   - **Exemple** : Si vous avez défini un cookie `setcookie('utilisateur', 'John');`, vous pouvez accéder à ce cookie avec `$_COOKIE['utilisateur']`.
+   - **Utilisation courante** : Stocker des informations persistantes comme la langue préférée, les préférences utilisateur ou l'identifiant de session.
+
+5. **`$_FILES`** :  
+   Cette variable est utilisée pour gérer le téléchargement de fichiers. Lorsque vous soumettez un formulaire avec un fichier, les informations de ce fichier (nom, type, taille, etc.) sont accessibles via `$_FILES`.
+   - **Exemple** : Si un formulaire contient un champ fichier avec le nom "cv", vous pouvez accéder aux détails du fichier téléchargé avec `$_FILES['cv']`.
+   - **Utilisation courante** : Téléchargement de fichiers comme des images, des documents, etc.
+
+### Exemple d'utilisation de ces variables dans un script PHP :
+```php
+<?php
+// Utilisation de $_GET
+if (isset($_GET['nom'])) {
+    echo 'Bonjour ' . $_GET['nom'];
+}
+
+// Utilisation de $_POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo 'Données reçues via POST: ' . $_POST['nom'];
+}
+
+// Utilisation de $_SESSION
+session_start();
+$_SESSION['utilisateur'] = 'John';
+echo 'Session utilisateur: ' . $_SESSION['utilisateur'];
+
+// Utilisation de $_COOKIE
+setcookie('langue', 'francais', time() + 3600); // expire dans 1 heure
+if (isset($_COOKIE['langue'])) {
+    echo 'Langue préférée: ' . $_COOKIE['langue'];
+}
+
+// Utilisation de $_FILES
+if (isset($_FILES['mon_fichier'])) {
+    $nom_fichier = $_FILES['mon_fichier']['name'];
+    echo 'Fichier téléchargé: ' . $nom_fichier;
+}
+?>
+```
+
+### Conclusion :
+Ces variables globales sont essentielles pour gérer la communication entre le client (navigateur) et le serveur. Elles permettent de transmettre et de récupérer des données via différentes méthodes comme GET, POST, et même gérer les sessions utilisateurs ou les fichiers téléchargés.
